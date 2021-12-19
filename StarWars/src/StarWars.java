@@ -44,24 +44,24 @@ or makeInstance call, retain it and then release it after the call is made.
 
 */
 
-class AutoDemo implements ActionListener
+class StarWars implements ActionListener
   {  
    JLabel displayLabel;
    JButton nextButton;
    JButton prevButton;
    JPanel choicesPanel;
    ButtonGroup choicesButtons;
-   ResourceBundle autoResources;
+   ResourceBundle StarWarsResources;
  
    Environment clips;
    boolean isExecuting = false;
    Thread executionThread;
       
-   AutoDemo()
+   StarWars()
      {  
       try
         {
-         autoResources = ResourceBundle.getBundle("resources.AutoResources",Locale.getDefault());
+    	  StarWarsResources = ResourceBundle.getBundle("resources.StarWarsResources",Locale.getDefault());
         }
       catch (MissingResourceException mre)
         {
@@ -73,7 +73,7 @@ class AutoDemo implements ActionListener
       /* Create a new JFrame container. */
       /*================================*/
      
-      JFrame jfrm = new JFrame(autoResources.getString("AutoDemo"));  
+      JFrame jfrm = new JFrame(StarWarsResources.getString("Title"));  
  
       /*=============================*/
       /* Specify FlowLayout manager. */
@@ -85,7 +85,7 @@ class AutoDemo implements ActionListener
       /* Give the frame an initial size. */
       /*=================================*/
      
-      jfrm.setSize(500,350);  
+      jfrm.setSize(500,250);  
   
       /*=============================================================*/
       /* Terminate the program when the user closes the application. */
@@ -114,12 +114,12 @@ class AutoDemo implements ActionListener
 
       JPanel buttonPanel = new JPanel(); 
       
-      prevButton = new JButton(autoResources.getString("Prev"));
+      prevButton = new JButton(StarWarsResources.getString("Prev"));
       prevButton.setActionCommand("Prev");
       buttonPanel.add(prevButton);
       prevButton.addActionListener(this);
       
-      nextButton = new JButton(autoResources.getString("Next"));
+      nextButton = new JButton(StarWarsResources.getString("Next"));
       nextButton.setActionCommand("Next");
       buttonPanel.add(nextButton);
       nextButton.addActionListener(this);
@@ -138,7 +138,7 @@ class AutoDemo implements ActionListener
       
       clips = new Environment();
       
-      clips.load("autodemo.clp");
+      clips.load("Star_Wars.clp");
       
       clips.reset();
       runAuto();
@@ -179,19 +179,19 @@ class AutoDemo implements ActionListener
       if (fv.getFactSlot("state").toString().equals("final"))
         { 
          nextButton.setActionCommand("Restart");
-         nextButton.setText(autoResources.getString("Restart")); 
+         nextButton.setText(StarWarsResources.getString("Restart")); 
          prevButton.setVisible(true);
         }
       else if (fv.getFactSlot("state").toString().equals("initial"))
         {
          nextButton.setActionCommand("Next");
-         nextButton.setText(autoResources.getString("Next"));
+         nextButton.setText(StarWarsResources.getString("Next"));
          prevButton.setVisible(false);
         }
       else
         { 
          nextButton.setActionCommand("Next");
-         nextButton.setText(autoResources.getString("Next"));
+         nextButton.setText(StarWarsResources.getString("Next"));
          prevButton.setVisible(true);
         }
       
@@ -212,9 +212,9 @@ class AutoDemo implements ActionListener
          JRadioButton rButton;
                         
          if (bv.toString().equals(selected))
-            { rButton = new JRadioButton(autoResources.getString(bv.toString()),true); }
+            { rButton = new JRadioButton(StarWarsResources.getString(bv.toString()),true); }
          else
-            { rButton = new JRadioButton(autoResources.getString(bv.toString()),false); }
+            { rButton = new JRadioButton(StarWarsResources.getString(bv.toString()),false); }
                      
          rButton.setActionCommand(bv.toString());
          choicesPanel.add(rButton);
@@ -227,7 +227,7 @@ class AutoDemo implements ActionListener
       /* Set the label to the display text. */
       /*====================================*/
 
-      String theText = autoResources.getString(fv.getFactSlot("display").symbolValue());
+      String theText = StarWarsResources.getString(fv.getFactSlot("display").symbolValue());
             
       wrapLabelText(displayLabel,theText);
       
@@ -392,7 +392,7 @@ class AutoDemo implements ActionListener
       SwingUtilities.invokeLater(
         new Runnable() 
           {  
-           public void run() { new AutoDemo(); }  
+           public void run() { new StarWars(); }  
           });   
      }  
   }
